@@ -12,7 +12,7 @@ const PopoverWrapper: React.FC<PopoverWrapperProps> = ({
   trigger,
 }) => {
   const [show, setShow] = React.useState<boolean>(false);
-  console.log(show);
+
   const wrapperRef = React.useRef(null);
   const contentRef = React.useRef(null);
 

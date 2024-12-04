@@ -18,41 +18,41 @@ const Content: React.FC<ContentProps> = ({
   setCurrentDate,
   onChange,
 }) => {
+  const changeDate = (day: Dayjs) => {
+    if (onChange) onChange(day);
+    setCurrentDate(day);
+  };
+
   const handlePreviousMonthClick = (day: number) => {
-    const dayInPreviousMonth = currentDate.subtract(1, "month").date(day);
-    setCurrentDate(dayInPreviousMonth);
+    changeDate(currentDate.subtract(1, "month").date(day));
   };
 
   const handleCurrentMonthClick = (day: number) => {
-    const dayInPreviousMonth = currentDate.date(day);
-    setCurrentDate(dayInPreviousMonth);
+    changeDate(currentDate.date(day));
   };
 
   const handleNextMonthClick = (day: number) => {
-    const dayInPreviousMonth = currentDate.date(day);
-    setCurrentDate(dayInPreviousMonth);
+    changeDate(currentDate.add(1, "month").date(day));
   };
 
   const handleKeyDown = (key: ArrowKeys) => {
-    let resultDay = currentDate;
     switch (key) {
       case "ArrowUp":
-        resultDay = currentDate.subtract(1, "week");
+        changeDate(currentDate.subtract(1, "week"));
         break;
       case "ArrowDown":
-        resultDay = currentDate.add(1, "week");
+        changeDate(currentDate.add(1, "week"));
         break;
       case "ArrowLeft":
-        resultDay = currentDate.subtract(1, "day");
+        changeDate(currentDate.subtract(1, "day"));
         break;
       case "ArrowRight":
-        resultDay = currentDate.add(1, "day");
+        changeDate(currentDate.add(1, "day"));
         break;
       case "Enter":
         if (onChange) onChange(currentDate);
-        break;
+        return;
     }
-    setCurrentDate(resultDay);
   };
 
   return (
@@ -77,8 +77,14 @@ const Content: React.FC<ContentProps> = ({
                 ? "border border-blue-400 text-center rounded-xl bg-blue-200 outline-blue-400"
                 : "text-center border-transparent outline-none"
             )}
-            onClick={() => handleCurrentMonthClick(day)}
-            onKeyDown={(e) => handleKeyDown(e.key as ArrowKeys)}
+            onClick={(e) => {
+              e.preventDefault();
+              if (e.detail === 1) {
+                // prevent key up is triggered when click
+                handleCurrentMonthClick(day);
+              }
+            }}
+            onKeyUp={(e) => handleKeyDown(e.key as ArrowKeys)}
           >
             <span className="text">{day}</span>
           </button>

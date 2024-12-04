@@ -13,7 +13,6 @@ const DateSelector: React.FC<DateSelectorProps> = ({ onChange }) => {
   const [currentDate, setCurrentDate] = React.useState<Dayjs>(
     dayjs(Date.now())
   );
-
   const onDateChange = (date: Dayjs) => {
     setCurrentDate(date);
   };
