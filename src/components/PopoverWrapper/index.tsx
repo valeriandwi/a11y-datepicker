@@ -1,4 +1,5 @@
 import React from "react";
+import { usePopoverStore } from "../../stores/popover";
 
 interface PopoverWrapperProps {
   children: React.ReactNode;
@@ -11,10 +12,9 @@ const PopoverWrapper: React.FC<PopoverWrapperProps> = ({
   content,
   trigger,
 }) => {
-  const [show, setShow] = React.useState<boolean>(false);
-
+  const { show, setShow } = usePopoverStore();
   const wrapperRef = React.useRef(null);
-  const contentRef = React.useRef(null);
+  const contentRef = React.useRef<HTMLDivElement | null>(null);
 
   const handleMouseOver = () => {
     if (trigger === "hover") setShow(true);
@@ -25,7 +25,7 @@ const PopoverWrapper: React.FC<PopoverWrapperProps> = ({
   };
 
   const onChildrenClick = () => {
-    setShow((prevState) => !prevState);
+    setShow(!show);
   };
 
   // React.useEffect(() => {

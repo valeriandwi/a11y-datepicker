@@ -2,6 +2,7 @@ import React from "react";
 import { DayLists } from "../../../../utils/dateObjectGenerator";
 import { Dayjs } from "dayjs";
 import clsx from "clsx";
+import { usePopoverStore } from "../../../../stores/popover";
 
 interface ContentProps {
   currentDate: Dayjs;
@@ -18,6 +19,8 @@ const Content: React.FC<ContentProps> = ({
   setCurrentDate,
   onChange,
 }) => {
+  const { setShow } = usePopoverStore();
+
   const changeDate = (day: Dayjs) => {
     if (onChange) onChange(day);
     setCurrentDate(day);
@@ -51,6 +54,7 @@ const Content: React.FC<ContentProps> = ({
         break;
       case "Enter":
         if (onChange) onChange(currentDate);
+        setShow(false);
         return;
     }
   };
