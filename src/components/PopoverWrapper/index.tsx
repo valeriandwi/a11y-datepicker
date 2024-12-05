@@ -13,8 +13,7 @@ const PopoverWrapper: React.FC<PopoverWrapperProps> = ({
   trigger,
 }) => {
   const { show, setShow } = usePopoverStore();
-  const wrapperRef = React.useRef(null);
-  const contentRef = React.useRef<HTMLDivElement | null>(null);
+  const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 
   const handleMouseOver = () => {
     if (trigger === "hover") setShow(true);
@@ -28,19 +27,20 @@ const PopoverWrapper: React.FC<PopoverWrapperProps> = ({
     setShow(!show);
   };
 
-  // React.useEffect(() => {
-  //   const handleClickOutside = () => {
-  //     if (wrapperRef.current) setShow(false);
-  //   };
-  //   if (show) {
-  //     // Bind the event listener
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //     return () => {
-  //       // Unbind the event listener on clean up
-  //       document.removeEventListener("mousedown", handleClickOutside);
-  //     };
-  //   }
-  // }, [show, wrapperRef]);
+  React.useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target))
+        setShow(false);
+    };
+    if (show) {
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [show, wrapperRef]);
 
   return (
     <div
@@ -51,7 +51,6 @@ const PopoverWrapper: React.FC<PopoverWrapperProps> = ({
     >
       <div onClick={onChildrenClick}>{children}</div>
       <div
-        ref={contentRef}
         hidden={!show}
         className="z-[999] min-w-fit w-full h-fit transition-all"
       >

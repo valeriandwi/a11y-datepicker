@@ -17,7 +17,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({ onChange }) => {
     setCurrentDate(date);
   };
 
-  const daysListGenerator = dayListsGenerator(currentDate);
+  const daysList = dayListsGenerator(currentDate);
 
   return (
     <div className="w-max flex flex-col space-y-4 p-2">
@@ -29,7 +29,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({ onChange }) => {
       <Content
         currentDate={currentDate}
         setCurrentDate={setCurrentDate}
-        daysList={daysListGenerator}
+        daysList={daysList}
         onChange={onChange}
       />
     </div>

@@ -19,7 +19,14 @@ const Content: React.FC<ContentProps> = ({
   setCurrentDate,
   onChange,
 }) => {
-  const { setShow } = usePopoverStore();
+  const { show, setShow } = usePopoverStore();
+  const todayRef = React.useRef<HTMLButtonElement | null>(null);
+  React.useEffect(() => {
+    // Set focus when modal showed
+    if (show) {
+      todayRef.current?.focus();
+    }
+  }, [show]);
 
   const changeDate = (day: Dayjs) => {
     if (onChange) onChange(day);
@@ -38,7 +45,7 @@ const Content: React.FC<ContentProps> = ({
     changeDate(currentDate.add(1, "month").date(day));
   };
 
-  const handleKeyDown = (key: ArrowKeys) => {
+  const handleKeyDown = (key: ArrowKeys, withControl: boolean) => {
     switch (key) {
       case "ArrowUp":
         changeDate(currentDate.subtract(1, "week"));
@@ -47,9 +54,11 @@ const Content: React.FC<ContentProps> = ({
         changeDate(currentDate.add(1, "week"));
         break;
       case "ArrowLeft":
+        if (withControl) return changeDate(currentDate.subtract(1, "month"));
         changeDate(currentDate.subtract(1, "day"));
         break;
       case "ArrowRight":
+        if (withControl) return changeDate(currentDate.add(1, "month"));
         changeDate(currentDate.add(1, "day"));
         break;
       case "Enter":
@@ -75,6 +84,7 @@ const Content: React.FC<ContentProps> = ({
       {daysList.days.map((day, index) => {
         return (
           <button
+            ref={index + 1 === daysList.day ? todayRef : null}
             key={`${day}/${index}`}
             className={clsx(
               index + 1 === daysList.day
@@ -88,7 +98,9 @@ const Content: React.FC<ContentProps> = ({
                 handleCurrentMonthClick(day);
               }
             }}
-            onKeyUp={(e) => handleKeyDown(e.key as ArrowKeys)}
+            onKeyDown={(e) =>
+              handleKeyDown(e.key as ArrowKeys, e.ctrlKey as boolean)
+            }
           >
             <span className="text">{day}</span>
           </button>
