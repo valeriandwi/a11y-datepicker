@@ -1,5 +1,8 @@
 # vdp-a11y-datepicker
 
+[![Npm package version](https://badgen.net/npm/v/vdp-a11y-datepicker)](https://npmjs.com/package/vdp-a11y-datepicker)
+![repo size](https://img.shields.io/github/repo-size/valeriandwi/a11y-datepicker)
+
 `vdp-a11y-datepicker` is a lightweight, accessible, and customizable date picker component for React. Built with accessibility in mind, it provides seamless keyboard navigation and screen reader support.
 
 ## Features
