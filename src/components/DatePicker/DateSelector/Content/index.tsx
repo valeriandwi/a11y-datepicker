@@ -11,7 +11,13 @@ interface ContentProps {
   onChange?: (date: Dayjs) => void;
 }
 
-type ArrowKeys = "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight" | "Enter";
+type ArrowKeys =
+  | "ArrowUp"
+  | "ArrowDown"
+  | "ArrowLeft"
+  | "ArrowRight"
+  | "Enter"
+  | "Escape";
 
 const Content: React.FC<ContentProps> = ({
   daysList,
@@ -73,7 +79,11 @@ const Content: React.FC<ContentProps> = ({
       case "Enter":
         if (onChange) onChange(currentDate);
         setShow(false);
-        return;
+        break;
+      case "Escape":
+        if (onChange) onChange(currentDate);
+        setShow(false);
+        break;
     }
   };
 
