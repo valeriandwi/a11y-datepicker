@@ -6,13 +6,23 @@ import Content from "./Content";
 import { dayListsGenerator } from "../../../utils/dateObjectGenerator";
 
 interface DateSelectorProps {
+  /**
+   * Callback function triggered when a date is selected.
+   * Receives the selected date as a `Dayjs` object.
+   */
   onChange?: (date: Dayjs) => void;
+  /**
+   * The default date value for the date selector.
+   * Should be a valid `Dayjs` object to initialize the selection.
+   */
+  defaultValue?: Dayjs;
 }
 
-const DateSelector: React.FC<DateSelectorProps> = ({ onChange }) => {
-  const [currentDate, setCurrentDate] = React.useState<Dayjs>(
-    dayjs(Date.now())
-  );
+const DateSelector: React.FC<DateSelectorProps> = ({
+  onChange,
+  defaultValue = dayjs(Date.now()),
+}) => {
+  const [currentDate, setCurrentDate] = React.useState<Dayjs>(defaultValue);
   const onDateChange = (date: Dayjs) => {
     setCurrentDate(date);
   };
@@ -26,6 +36,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({ onChange }) => {
         onDateChange={onDateChange}
       />
       <WeekDays />
+      <hr className="w-full" />
       <Content
         currentDate={currentDate}
         setCurrentDate={setCurrentDate}

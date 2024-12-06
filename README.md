@@ -1,50 +1,103 @@
-# React + TypeScript + Vite
+# vdp-a11y-datepicker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+`vdp-a11y-datepicker` is a lightweight, accessible, and customizable date picker component for React. Built with accessibility in mind, it provides seamless keyboard navigation and screen reader support.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Fully accessible (ARIA compliant)
+- Customizable date formats
+- Lightweight and easy to integrate
+- Supports "click" or "hover" trigger actions
+- Built-in styling with the flexibility to override styles
 
-## Expanding the ESLint configuration
+## Keyboard Accessible
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+When the calendar is opened, focus is set on the current date
 
-- Configure the top-level `parserOptions` property like this:
+- Press `← / →` arrow keys to moves focus to the previous or next day
+- Press `↑ / ↓` arrow keys to moves focus to the same day of previous or next week
+- Press `( Ctrl + → )` key to change to the next month
+- Press `( Ctrl + ← )` key to change to previous month
+- Press `( Alt + → )` key to change to the next year
+- Press `( Alt + ← )` key to change to previous year
+- Press `↵ Enter` key to activate the selected date
+- Press `Esc` key to close the dialog modal
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Usage
+
+```tsx
+import React from "react";
+import DatePicker from "vdp-a11y-datepicker";
+
+const App = () => {
+  const handleDateChange = (date) => {
+    console.log("Selected date:", date.format("DD-MM-YYYY"));
+  };
+
+  return (
+    <DatePicker
+      placeholder="Select a date"
+      format="DD-MM-YYYY"
+      onChange={handleDateChange}
+    />
+  );
+};
+
+export default App;
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Props
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### DatePicker Props
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+### DatePicker Props
+
+| **Prop**         | **Type**                | **Default**         | **Description**                                                                |
+| ---------------- | ----------------------- | ------------------- | ------------------------------------------------------------------------------ |
+| `placeholder`    | `string`                | `format` value      | Placeholder text for the input field.                                          |
+| `format`         | `string`                | `"DD-MM-YYYY"`      | Format in which the selected date is displayed.                                |
+| `inputClassName` | `string`                | `undefined`         | Additional CSS class names for styling the input field.                        |
+| `trigger`        | `click`                 | `hover`             | Determines how the date picker popover is triggered.                           |
+| `onChange`       | `(date: Dayjs) => void` | `undefined`         | Callback function triggered when a date is selected. Returns a `Dayjs` object. |
+| `defaultValue`   | `Dayjs`                 | `dayjs(Date.now())` | The default date value for the date selector.                                  |
+
+## Styling
+
+The date picker comes with minimal built-in styles to provide a good base. You can extend or override these styles by passing custom class names via the inputClassName prop or using CSS.
+
+Example:
+
+```css
+.custom-input {
+  border: 2px solid #4caf50;
+  border-radius: 8px;
+  padding: 10px;
+}
 ```
+
+```tsx
+<DatePicker placeholder="Select a date" inputClassName="custom-input" />
+```
+
+## Accessibility
+
+This component is designed to be accessible out of the box:
+
+- Uses ARIA attributes for screen reader support.
+- Fully keyboard-navigable.
+
+## Development
+
+To contribute or modify the library locally:
+
+Clone the repository.
+Install dependencies using npm install.
+Start the development server using npm run dev.
+
+---
+
+Feel free to report issues or contribute to this project!
+
+## Author
+
+Developed by Valerian Dwi Purnomo. Feedback and contributions are always welcome!
