@@ -1,8 +1,8 @@
 import React from "react";
 import { DayLists } from "../../../../utils/dateObjectGenerator";
 import { Dayjs } from "dayjs";
-import clsx from "clsx";
 import { usePopoverStore } from "../../../../stores/popover";
+import DayGrid from "./DayGrid";
 
 interface ContentProps {
   currentDate: Dayjs;
@@ -35,14 +35,17 @@ const Content: React.FC<ContentProps> = ({
 
   const handlePreviousMonthClick = (day: number) => {
     changeDate(currentDate.subtract(1, "month").date(day));
+    setShow(false);
   };
 
   const handleCurrentMonthClick = (day: number) => {
     changeDate(currentDate.date(day));
+    setShow(false);
   };
 
   const handleNextMonthClick = (day: number) => {
     changeDate(currentDate.add(1, "month").date(day));
+    setShow(false);
   };
 
   const handleKeyDown = (key: ArrowKeys, withControl: boolean) => {
@@ -70,27 +73,22 @@ const Content: React.FC<ContentProps> = ({
 
   return (
     <div className="grid grid-cols-7 w-full gap-4">
-      {daysList.prevMonthDays.map((day, index) => {
-        return (
-          <button
-            key={`${day}/${index}`}
-            className="text-gray-500 text-center"
-            onClick={() => handlePreviousMonthClick(day)}
-          >
-            <span className="text-gray-400">{day}</span>
-          </button>
-        );
-      })}
+      {/* Days of Prev Month */}
+      {daysList.prevMonthDays.map((day, index) => (
+        <DayGrid
+          key={`${day}/${index}`}
+          day={day}
+          isCurrentMonth={false}
+          onClick={() => handlePreviousMonthClick(day)}
+        />
+      ))}
+      {/* Days of Current Month */}
       {daysList.days.map((day, index) => {
         return (
-          <button
-            ref={index + 1 === daysList.day ? todayRef : null}
+          <DayGrid
             key={`${day}/${index}`}
-            className={clsx(
-              index + 1 === daysList.day
-                ? "border border-blue-400 text-center rounded-xl bg-blue-200 outline-blue-400"
-                : "text-center border-transparent outline-none"
-            )}
+            ref={index + 1 === daysList.day ? todayRef : null}
+            day={day}
             onClick={(e) => {
               e.preventDefault();
               if (e.detail === 1) {
@@ -98,23 +96,21 @@ const Content: React.FC<ContentProps> = ({
                 handleCurrentMonthClick(day);
               }
             }}
-            onKeyDown={(e) =>
-              handleKeyDown(e.key as ArrowKeys, e.ctrlKey as boolean)
-            }
-          >
-            <span className="text">{day}</span>
-          </button>
+            isCurrentMonth
+            isCurrentDay={index + 1 === daysList.day}
+            onKeyDown={(e) => handleKeyDown(e.key as ArrowKeys, e.ctrlKey)}
+          />
         );
       })}
+      {/* Days of Next Month */}
       {daysList.remainingDays.map((day, index) => {
         return (
-          <button
+          <DayGrid
             key={`${day}/${index}`}
-            className="text-center"
+            day={day}
+            isCurrentMonth={false}
             onClick={() => handleNextMonthClick(day)}
-          >
-            <div className=" text-gray-400">{day}</div>
-          </button>
+          />
         );
       })}
     </div>
