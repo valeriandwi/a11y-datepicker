@@ -8,9 +8,9 @@ import { dayListsGenerator } from "../../../utils/dateObjectGenerator";
 interface DateSelectorProps {
   /**
    * Callback function triggered when a date is selected.
-   * Receives the selected date as a `Dayjs` object.
+   * Receives the selected date as a `Date` object.
    */
-  onChange?: (date: Dayjs) => void;
+  onChange?: (date: Date) => void;
   /**
    * The default date value for the date selector.
    * Should be a valid `Dayjs` object to initialize the selection.

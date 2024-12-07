@@ -1,13 +1,12 @@
-# vdp-a11y-datepicker
+# a11y-datepicker-react
 
-[![Npm package version](https://badgen.net/npm/v/vdp-a11y-datepicker)](https://npmjs.com/package/vdp-a11y-datepicker)
+[![Npm package version](https://badgen.net/npm/v/a11y-datepicker-react)](https://npmjs.com/package/a11y-datepicker-react)
 ![repo size](https://img.shields.io/github/repo-size/valeriandwi/a11y-datepicker)
 
-`vdp-a11y-datepicker` is a lightweight, accessible, and customizable date picker component for React. Built with accessibility in mind, it provides seamless keyboard navigation and screen reader support.
+`a11y-datepicker-react` is a lightweight, accessible, and customizable date picker component for React. Built with accessibility in mind, it provides seamless keyboard navigation and screen reader support.
 
 ## Features
 
-- Fully accessible (ARIA compliant)
 - Customizable date formats
 - Lightweight and easy to integrate
 - Supports "click" or "hover" trigger actions
@@ -21,8 +20,8 @@ When the calendar is opened, focus is set on the current date
 - Press `↑ / ↓` arrow keys to moves focus to the same day of previous or next week
 - Press `( Ctrl + → )` key to change to the next month
 - Press `( Ctrl + ← )` key to change to previous month
-- Press `( Alt + → )` key to change to the next year
-- Press `( Alt + ← )` key to change to previous year
+- Press `( Shift + → )` key to change to the next year
+- Press `( Shift + ← )` key to change to previous year
 - Press `↵ Enter` key to activate the selected date
 - Press `Esc` key to close the dialog modal
 

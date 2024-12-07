@@ -1,14 +1,14 @@
 import React from "react";
-import { DayLists } from "../../../../utils/dateObjectGenerator";
 import { Dayjs } from "dayjs";
-import { usePopoverStore } from "../../../../stores/popover";
 import DayGrid from "./DayGrid";
+import { DayLists } from "@/utils/dateObjectGenerator";
+import { usePopoverStore } from "@/stores/popover";
 
 interface ContentProps {
   currentDate: Dayjs;
   setCurrentDate: React.Dispatch<React.SetStateAction<Dayjs>>;
   daysList: DayLists;
-  onChange?: (date: Dayjs) => void;
+  onChange?: (date: Date) => void;
 }
 
 type ArrowKeys =
@@ -35,7 +35,7 @@ const Content: React.FC<ContentProps> = ({
   }, [show]);
 
   const changeDate = (day: Dayjs) => {
-    if (onChange) onChange(day);
+    if (onChange) onChange(day.toDate());
     setCurrentDate(day);
   };
 
@@ -57,7 +57,7 @@ const Content: React.FC<ContentProps> = ({
   const handleKeyDown = (
     key: ArrowKeys,
     withControlKey: boolean,
-    withAltKey: boolean
+    withShiftKey: boolean
   ) => {
     switch (key) {
       case "ArrowUp":
@@ -68,20 +68,20 @@ const Content: React.FC<ContentProps> = ({
         break;
       case "ArrowLeft":
         if (withControlKey) return changeDate(currentDate.subtract(1, "month"));
-        if (withAltKey) return changeDate(currentDate.subtract(1, "year"));
+        if (withShiftKey) return changeDate(currentDate.subtract(1, "year"));
         changeDate(currentDate.subtract(1, "day"));
         break;
       case "ArrowRight":
         if (withControlKey) return changeDate(currentDate.add(1, "month"));
-        if (withAltKey) return changeDate(currentDate.add(1, "year"));
+        if (withShiftKey) return changeDate(currentDate.add(1, "year"));
         changeDate(currentDate.add(1, "day"));
         break;
       case "Enter":
-        if (onChange) onChange(currentDate);
+        if (onChange) onChange(currentDate.toDate());
         setShow(false);
         break;
       case "Escape":
-        if (onChange) onChange(currentDate);
+        if (onChange) onChange(currentDate.toDate());
         setShow(false);
         break;
     }
@@ -115,7 +115,7 @@ const Content: React.FC<ContentProps> = ({
             isCurrentMonth
             isCurrentDay={index + 1 === daysList.day}
             onKeyDown={(e) =>
-              handleKeyDown(e.key as ArrowKeys, e.ctrlKey, e.altKey)
+              handleKeyDown(e.key as ArrowKeys, e.ctrlKey, e.shiftKey)
             }
           />
         );

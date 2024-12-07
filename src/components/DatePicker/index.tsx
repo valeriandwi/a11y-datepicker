@@ -3,8 +3,9 @@ import PopoverWrapper from "../PopoverWrapper";
 import DateSelector from "./DateSelector";
 import dayjs, { Dayjs } from "dayjs";
 import clsx from "clsx";
+import "@/index.css";
 
-interface DatePickerProps {
+export interface DatePickerProps {
   /**
    * Placeholder text to display in the input field when no date is selected.
    * Defaults to the provided `format` value if not set.
@@ -30,9 +31,9 @@ interface DatePickerProps {
 
   /**
    * Callback function triggered when a date is selected.
-   * Receives the selected date as a `Dayjs` object.
+   * Receives the selected date as a `Date` object.
    */
-  onChange?: (date: Dayjs) => void;
+  onChange?: (date: Date) => void;
 
   /**
    * The default date value for the date picker.
@@ -51,8 +52,8 @@ const DatePicker: React.FC<DatePickerProps> = ({
 }) => {
   const [value, setValue] = React.useState<string | undefined>("");
 
-  const onDateChange = (date: Dayjs) => {
-    setValue(date.format(format));
+  const onDateChange = (date: Date) => {
+    setValue(dayjs(date).format(format));
     if (onChange) onChange(date);
   };
 

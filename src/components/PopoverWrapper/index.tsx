@@ -1,5 +1,5 @@
+import { usePopoverStore } from "@/stores/popover";
 import React from "react";
-import { usePopoverStore } from "../../stores/popover";
 
 interface PopoverWrapperProps {
   children: React.ReactNode;

@@ -1,7 +1,7 @@
+import BackIcon from "@/assets/back-icon";
+import NextIcon from "@/assets/next-icon";
 import { Dayjs } from "dayjs";
 import React from "react";
-import BackIcon from "../../../../assets/back-icon";
-import NextIcon from "../../../../assets/next-icon";
 
 interface DateSelectorProps {
   onDateChange: (value: Dayjs) => void;

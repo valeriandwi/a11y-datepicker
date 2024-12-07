@@ -1,9 +1,13 @@
-import DatePicker from "./components/DatePicker";
+import DatePicker from "@/components/DatePicker";
 
 function App() {
+  const onChange = (date: Date) => {
+    console.log(date);
+  };
+
   return (
     <div className="p-4 flex justify-center h-screen">
-      <DatePicker />
+      <DatePicker onChange={onChange} />
     </div>
   );
 }
