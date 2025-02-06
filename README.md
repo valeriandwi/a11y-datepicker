@@ -29,7 +29,7 @@ When the calendar is opened, focus is set on the current date
 
 ```tsx
 import React from "react";
-import DatePicker from "vdp-a11y-datepicker";
+import DatePicker from "a11y-datepicker-react";
 
 const App = () => {
   const handleDateChange = (date) => {
