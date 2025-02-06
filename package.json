@@ -2,7 +2,7 @@
   "name": "a11y-datepicker-react",
   "private": false,
   "description": "a lightweight, accessible, and customizable date picker component for React. Built with accessibility in mind, it provides seamless keyboard navigation and screen reader support.",
-  "version": "0.0.5",
+  "version": "0.0.1",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
